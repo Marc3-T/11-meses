@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>11 Meses Juntos ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,12 +13,13 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            font-family: 'Patrick Hand', cursive;
             background: linear-gradient(135deg, #ffd1dc 0%, #f8c8dc 100%);
             color: #8a4b76;
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
+            letter-spacing: 0.5px;
         }
 
         .container {
@@ -49,22 +51,22 @@
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             margin-bottom: 1rem;
-            font-weight: 500;
+            font-weight: normal;
             color: #d1478b;
         }
 
         .counter {
-            font-size: 3.5rem;
-            font-weight: bold;
+            font-size: 4rem;
+            font-weight: normal;
             margin: 2rem 0;
             color: #d1478b;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 3rem;
             opacity: 0.9;
             color: #8a4b76;
@@ -75,12 +77,13 @@
             border: 2px solid #d1478b;
             color: #d1478b;
             padding: 15px 30px;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             border-radius: 50px;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            font-weight: 600;
+            font-weight: normal;
+            font-family: 'Patrick Hand', cursive;
         }
 
         button:hover {
@@ -94,7 +97,7 @@
         }
 
         .back-button {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 2rem;
             cursor: pointer;
             display: inline-block;
@@ -104,8 +107,9 @@
         h2 {
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #d1478b;
+            font-weight: normal;
         }
 
         .memory-card {
@@ -124,29 +128,86 @@
         }
 
         .memory-date {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
+            font-weight: normal;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
             color: #d1478b;
         }
 
         .memory-text {
-            font-size: 1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
         }
 
+        /* Galería de fotos */
         .photo-gallery {
             margin-top: 3rem;
-            text-align: center;
         }
 
-        .photo-placeholder {
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: #d1478b;
+            font-weight: normal;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 10px;
+            text-align: center;
+            font-size: 1rem;
+            color: white;
+            backdrop-filter: blur(2px);
+            font-family: 'Patrick Hand', cursive;
+        }
+
+        .add-photos-note {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.5);
-            padding: 40px 20px;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            opacity: 0.7;
-            border: 2px dashed rgba(209, 71, 139, 0.3);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: #8a4b76;
         }
 
         /* Mensaje flotante */
@@ -160,14 +221,81 @@
             backdrop-filter: blur(10px);
             animation: float 3s ease-in-out infinite;
             color: #d1478b;
-            font-weight: 600;
+            font-weight: normal;
             border: 1px solid rgba(209, 71, 139, 0.2);
+            z-index: 100;
+            font-size: 1.2rem;
+        }
+
+        /* Modal para foto ampliada */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            padding: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #d1478b;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            font-family: 'Patrick Hand', cursive;
+        }
+
+        .modal-caption {
+            text-align: center;
+            padding: 10px;
+            color: #8a4b76;
+            font-weight: normal;
+            font-size: 1.3rem;
         }
 
         /* Animaciones */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes heartbeat {
@@ -187,15 +315,57 @@
             }
             
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
             .counter {
-                font-size: 2.8rem;
+                font-size: 3.2rem;
             }
             
             .heart {
                 font-size: 3rem;
+            }
+            
+            .photos-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            
+            .photo-caption {
+                font-size: 0.9rem;
+                padding: 6px;
+            }
+            
+            .memory-date {
+                font-size: 1.2rem;
+            }
+            
+            .memory-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photos-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            
+            .photo-caption {
+                font-size: 0.8rem;
+                padding: 4px;
+            }
+            
+            .gallery-title {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .counter {
+                font-size: 2.8rem;
             }
         }
     </style>
@@ -207,13 +377,13 @@
             <div class="heart">💖</div>
             <h1>Hoy cumplimos</h1>
             <div class="counter">11 MESES</div>
-            <p>Juntos, creando nuestra historia, mi amor hermosa</p>
+            <p>Juntos, creando nuestra historia, mi novia hermosa</p>
             <button onclick="showMemories()">Entrar</button>
         </div>
 
         <!-- Pantalla de recuerdos -->
         <div id="memories-screen" class="screen">
-            <div class="back-button" onclick="showWelcome()">←</div>
+            <div class="back-button" onclick="showWelcome()">← Volver</div>
             <h2>Nuestros 11 Meses</h2>
             
             <div class="memory-card">
@@ -271,14 +441,77 @@
                 <div class="memory-text">11 meses contigo, y quiero muchos más 🌈</div>
             </div>
             
+            <!-- Galería de fotos -->
             <div class="photo-gallery">
-                <div class="photo-placeholder">📸 (Aquí puedes agregar fotos)</div>
+                <h3 class="gallery-title">Nuestros Momentos Especiales</h3>
+                <div class="photos-grid">
+                    <!-- Fila 1 -->
+                    <div class="photo-item" onclick="openModal('photo1')">
+                        <img src="tu-foto.jpg" alt="Descripción">
+                        <div class="photo-caption">Primera cita</div>
+                    </div>
+                    
+                    <div class="photo-item" onclick="openModal('photo2')">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="Día en la playa">
+                        <div class="photo-caption">Día playa</div>
+                    </div>
+                    
+                    <div class="photo-item" onclick="openModal('photo3')">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Celebrando juntos">
+                        <div class="photo-caption">Celebrando</div>
+                    </div>
+                    
+                    <!-- Fila 2 -->
+                    <div class="photo-item" onclick="openModal('photo4')">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Aventuras">
+                        <div class="photo-caption">Aventuras</div>
+                    </div>
+                    
+                    <div class="photo-item" onclick="openModal('photo5')">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Momentos divertidos">
+                        <div class="photo-caption">Divertidos</div>
+                    </div>
+                    
+                    <div class="photo-item" onclick="openModal('photo6')">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="Paseos">
+                        <div class="photo-caption">Paseos</div>
+                    </div>
+                    
+                    <!-- Fila 3 -->
+                    <div class="photo-item" onclick="openModal('photo7')">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Cenas especiales">
+                        <div class="photo-caption">Cenas</div>
+                    </div>
+                    
+                    <div class="photo-item" onclick="openModal('photo8')">
+                        <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Viajes">
+                        <div class="photo-caption">Viajes</div>
+                    </div>
+                    
+                    <div class="photo-item" onclick="openModal('photo9')">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Futuro">
+                        <div class="photo-caption">Futuro</div>
+                    </div>
+                </div>
+                
+                <div class="add-photos-note">
+                    💝 Cada foto cuenta una parte de nuestra historia especial
+                </div>
             </div>
         </div>
 
         <!-- Mensaje especial -->
         <div class="floating-message">
             Te amo ❤️
+        </div>
+
+        <!-- Modal para fotos ampliadas -->
+        <div id="photoModal" class="modal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeModal()">×</button>
+                <img id="modalImage" src="" alt="">
+                <div class="modal-caption" id="modalCaption"></div>
+            </div>
         </div>
     </div>
 
@@ -293,11 +526,48 @@
             document.getElementById('welcome-screen').classList.add('active');
         }
 
+        // Funcionalidad del modal para fotos
+        function openModal(photoId) {
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            // Obtener la fuente de la imagen clickeada
+            const clickedPhoto = document.querySelector(`[onclick="openModal('${photoId}')"] img`);
+            modalImage.src = clickedPhoto.src;
+            modalImage.alt = clickedPhoto.alt;
+            modalCaption.textContent = clickedPhoto.alt;
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+        }
+
+        // Cerrar modal al hacer clic fuera de la imagen
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
         // Efectos adicionales para hacerlo más especial
         document.addEventListener('DOMContentLoaded', function() {
             // Agregar confeti al hacer clic
             document.body.addEventListener('click', function(e) {
-                createConfetti(e.clientX, e.clientY);
+                // No crear confeti cuando se hace clic en fotos o botones
+                if (!e.target.closest('.photo-item') && !e.target.closest('button') && !e.target.closest('.modal')) {
+                    createConfetti(e.clientX, e.clientY);
+                }
             });
         });
 
